@@ -32,18 +32,18 @@ inline void set_bits(uint8_t* data, int start, int end, uint64_t value) {
   int ie = end   / 8;
   int be = end   % 8;
 
+  value <<= bs;
   if (ie == is) {
-    uint8_t mask = ~(0xFF << (be - bs)) << bs;
+    uint8_t mask = ~(0xFF << (be + 1 - bs)) << bs;
     data[ie] = data[ie] & ~mask | value & mask;
   } else {
-    data[is] = data[is] & 0xFF >> 8 - bs | value << bs;
-    value >>= 8 - bs;
+    data[is] = data[is] & 0xFF >> 8 - bs | value;
     for (int i = is + 1; i < ie; ++i) {
-      data[i] = value;
       value >>= 8;
+      data[i] = value;
     };
     uint8_t mask = 0xFF >> 7 - be;
-    data[ie] = value & mask | data[ie] & ~mask;
+    data[ie] = value >> 8 & mask | data[ie] & ~mask;
   };
 };
 
