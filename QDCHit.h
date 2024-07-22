@@ -54,7 +54,7 @@ public:
   };
   
   void SetGEO(uint8_t geo) {
-      set_bits(data, 13, 13, geo);
+      set_bits(data, 14, 18, geo);
   };
   
   uint8_t GetChannel() const {
@@ -85,9 +85,9 @@ public:
       output << "value = " << GetValue() << std::endl;
       output << "under_threshold = " << GetUnderThreshold() << std::endl;
       output << "overflow = " << GetOverflow() << std::endl;
-      output << "geo = " << GetGEO() << std::endl;
-      output << "channel = " << GetChannel() << std::endl;
-      output << "crate = " << GetCrate() << std::endl;
+      output << "geo = " << static_cast<int>(GetGEO()) << std::endl;
+      output << "channel = " << static_cast<int>(GetChannel()) << std::endl;
+      output << "crate = " << static_cast<int>(GetCrate()) << std::endl;
       output << "event = " << GetEvent() << std::endl;
   };
   
@@ -101,7 +101,7 @@ private:
    * 24 - 31   8      crate
    * 32 - 55   24     event
    
-   01234567
+     01234567
    0 vvvvvvvv         v = value
    1 vvvvuogg         u = under threshold
    2 gggccccc         o = overflow
