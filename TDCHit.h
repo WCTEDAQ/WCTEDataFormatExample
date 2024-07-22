@@ -84,7 +84,7 @@ public:
     output << "event = " << GetEvent() << std::endl;
     output << "channel = " << GetChannel() << std::endl;
     output << "trailing = " << GetTrailing() << std::endl;
-    output << "geo = " << GetGEO() << std::endl;
+    output << "geo = " << static_cast<int>(GetGEO()) << std::endl;
   };
 
 private:
@@ -96,17 +96,17 @@ private:
    * 77 - 77   1      trailing
    * 80 - 84   5      geo
    
-   01234567 
-   0 mmmmmmmm         0 = zero
-   1 mmmmmmmm         m = measurement
-   2 mmmmmTTT         c = channel
-   3 TTTTTTTT         t = trailing
-   4 TTTTTTTT         C = event
-   5 TTTTTTTT         T = extended time
-   6 CCCCCCCC
-   7 CCCCCCCC
-   8 CCCCCC00
-   9 ccccct00
+      01234567
+    0 mmmmmmmm         0 = zero
+    1 mmmmmmmm         m = measurement
+    2 mmmmmTTT         c = channel
+    3 TTTTTTTT         t = trailing
+    4 TTTTTTTT         C = event
+    5 TTTTTTTT         T = extended time
+    6 CCCCCCCC
+    7 CCCCCCCC
+    8 CCCCCC00
+    9 ccccct00
    10 ggggg000
   */
   uint8_t data[11];
