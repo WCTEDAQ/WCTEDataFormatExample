@@ -54,7 +54,7 @@ public:
   };
   
   void SetGEO(uint8_t geo) {
-      set_bits(data, 13, 13, geo);
+      set_bits(data, 14, 18, geo);
   };
   
   uint8_t GetChannel() const {
