@@ -48,8 +48,8 @@ public:
   std::vector<WCTEMPMTHit> mpmt_hits;  
   std::vector<WCTEMPMTWaveform> mpmt_waveforms;
   std::vector<HKMPMTHit> hk_mpmt_hits;
-  std::vector<TDCHit> tdc_hit;
-  std::vector<QDCHit> qdc_hit;
+  std::vector<TDCHit> tdc_hits;
+  std::vector<QDCHit> qdc_hits;
 
 
   bool Print(){
@@ -63,9 +63,9 @@ public:
     std::cout<<"/////////////////////////hk mpmt hits//////////////////"<<std::endl;
     for(int i=0; i<hk_mpmt_hits.size(); i++){ std::cout<<"///["<<i<<"]///"<<std::endl; hk_mpmt_hits.at(i).Print();}
     std::cout<<"/////////////////////////tdc data//////////////////"<<std::endl;
-    for(int i=0; i<tdc_hit.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; tdc_hit.at(i).Print();}
+    for(int i=0; i<tdc_hits.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; tdc_hits.at(i).Print();}
     std::cout<<"/////////////////////////qdc data//////////////////"<<std::endl;
-    for(int i=0; i<qdc_hit.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; qdc_hit.at(i).Print();}
+    for(int i=0; i<qdc_hits.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; qdc_hits.at(i).Print();}
     std::cout<<"///////////////////////////////////////////"<<std::endl;
     
     return true;
@@ -78,8 +78,8 @@ public:
     bs & mpmt_hits;
     bs & mpmt_waveforms;
     bs & hk_mpmt_hits;
-    bs & tdc_hit;
-    bs & qdc_hit;
+    bs & tdc_hits;
+    bs & qdc_hits;
 
     return true;
   } 
