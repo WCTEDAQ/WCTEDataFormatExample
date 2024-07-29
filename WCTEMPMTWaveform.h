@@ -44,12 +44,12 @@ public:
     
   }
   void SetNumSamples(unsigned short in){
-    data[5] = (data[5] & 0b11100000) | ((in >> 11) & 0b000111111 );
+    data[5] = (data[5] & 0b11100000) | ((in >> 11) & 0b00011111 );
     data[6] = in >> 3;
     data[7] = (data[7] & 0b00011111) | ((in & 0b00000111) << 5);
   }
   void SetLength(unsigned int in){
-    data[7] = (data[7] & 0b11100000) | ((in >> 12) & 0b000111111 );
+    data[7] = (data[7] & 0b11100000) | ((in >> 12) & 0b00011111 );
     data[8] = in >> 4;
     data[9] = (data[9] & 0b00001111) | ((in & 0b00001111) << 4);
   }

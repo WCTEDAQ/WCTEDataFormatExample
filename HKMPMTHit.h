@@ -31,12 +31,12 @@ private:
 };
 
 
-class HKMPMTHit : public SerialisableObject{
+class HKMPMTHit : public ToolFramework::SerialisableObject{
 
 public:
   HKMPMTHit(){std::fill(std::begin(data), std::end(data), 0);}
   
-  unsigned short GetCARDID(){return card_id;}
+  unsigned short GetCardID(){return card_id;}
   unsigned short GetHeader(){return (data[0] & 0b11000000) >> 6; }
   unsigned short GetEventType(){return (data[0] & 0b00111100) >> 2;}
   unsigned short GetChannel(){return ((data[0] & 0b00000011) << 3) | ((data[1] & 0b11100000) >> 5); }
@@ -84,7 +84,7 @@ public:
 
   std::vector<HKMPMTSubHit> sub_hits;
 
-   bool Serialise(BinaryStream &bs){
+   bool Serialise(ToolFramework::BinaryStream &bs){
      bs & data;
      bs & sub_hits;
 
