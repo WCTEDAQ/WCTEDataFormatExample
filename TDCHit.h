@@ -13,68 +13,68 @@ public:
   
   TDCHit(uint32_t header, uint32_t measurement, uint32_t extended_time) {
     std::fill(std::begin(data), std::end(data), 0);
-    SetGEO(bits(header, 0, 4));
-    SetEvent(bits(header, 5, 26));
-    SetMeasurement(bits(measurement, 0, 20));
-    SetChannel(bits(measurement, 21, 25));
-    SetTrailing(bits(measurement, 26, 26));
-    SetExtendedTime(bits(extended_time, 0, 26));
+    SetGEO(bits<0, 4>(header));
+    SetEvent(bits<5, 26>(header));
+    SetMeasurement(bits<0, 20>(measurement));
+    SetChannel(bits<21, 25>(measurement));
+    SetTrailing(bits<26, 26>(measurement));
+    SetExtendedTime(bits<0, 26>(extended_time));
   };
   
   uint32_t GetMeasurement() const {
-    return bits(data, 0, 20);
+    return bits<0, 20>(data);
   };
   
   void SetMeasurement(uint32_t measurement) {
-    set_bits(data, 0, 20, measurement);
+    set_bits<0, 20>(data, measurement);
   };
   
   uint32_t GetExtendedTime() const {
-    return bits(data, 21, 47);
+    return bits<21, 47>(data);
   };
   
   void SetExtendedTime(uint32_t time) {
-    set_bits(data, 21, 47, time);
+    set_bits<21, 47>(data, time);
   };
 
   uint64_t GetValue() const {
-    return bits(data, 0, 47);
+    return bits<0, 47>(data);
   };
   
   void SetValue(uint64_t value) {
-    set_bits(data, 0, 47, value);
+    set_bits<0, 47>(data, value);
   };
   
   uint32_t GetEvent() const {
-    return bits(data, 48, 69);
+    return bits<48, 69>(data);
   };
   
   void SetEvent(uint32_t event) {
-    set_bits(data, 48, 69, event);
+    set_bits<48, 69>(data, event);
   };
   
   uint16_t GetChannel() const {
-    return bits(data, 72, 76);
+    return bits<72, 76>(data);
   };
   
   void SetChannel(uint8_t channel) {
-    set_bits(data, 72, 76, channel);
+    set_bits<72, 76>(data, channel);
   };
   
   bool GetTrailing() const {
-    return bits(data, 77, 77);
+    return bits<77, 77>(data);
   };
   
   void SetTrailing(bool trailing) {
-    set_bits(data, 77, 77, trailing);
+    set_bits<77, 77>(data, trailing);
   };
 
   uint8_t GetGEO() const {
-    return bits(data, 80, 84);
+    return bits<80, 84>(data);
   };
   
   void SetGEO(uint8_t geo) {
-    set_bits(data, 80, 84, geo);
+    set_bits<80, 84>(data, geo);
   };
   
   void Print(std::ostream& output = std::cout) const {

@@ -43,8 +43,8 @@ int main(){
        tmptrigger.mpmt_hits.push_back(mpmt_hit);
        tmptrigger.mpmt_waveforms.push_back(mpmt_waveform);
        tmptrigger.hk_mpmt_hits.push_back(hk_mpmt_hit);
-       tmptrigger.tdc_hit.push_back(tdc_hit);
-       tmptrigger.qdc_hit.push_back(qdc_hit);
+       tmptrigger.tdc_hits.push_back(tdc_hit);
+       tmptrigger.qdc_hits.push_back(qdc_hit);
      }
 
      TriggerInfo trigger_info;

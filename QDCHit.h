@@ -16,69 +16,69 @@ public:
 	 uint32_t packet,
 	 uint32_t trailer
 	 ) {
-    SetCrate(bits(header, 16, 23));
-    SetValue(bits(packet, 0, 11));
-    SetOverflow(bits(packet, 12, 12));
-    SetUnderThreshold(bits(packet, 13, 13));
-    SetChannel(bits(packet, 16, 20));
-    SetGEO(bits(packet, 27, 31));
-    SetEvent(bits(trailer, 0, 23));
+    SetCrate(bits<16, 23>(header));
+    SetValue(bits<0, 11>(packet));
+    SetOverflow(bits<12, 12>(packet));
+    SetUnderThreshold(bits<13, 13>(packet));
+    SetChannel(bits<16, 20>(packet));
+    SetGEO(bits<27, 31>(packet));
+    SetEvent(bits<0, 23>(trailer));
   };
   
   uint16_t GetValue() const {
-    return bits(data, 0, 11);
+    return bits<0, 11>(data);
   };
   
   void SetValue(uint16_t value) {
-    set_bits(data, 0, 11, value);
+    set_bits<0, 11>(data, value);
   };
   
   bool GetUnderThreshold() const {
-    return bits(data, 12, 12);
-    };
+    return bits<12, 12>(data);
+  };
   
   void SetUnderThreshold(bool ut) {
-    set_bits(data, 12, 12, ut);
+    set_bits<12, 12>(data, ut);
   };
   
   bool GetOverflow() const {
-    return bits(data, 13, 13);
+    return bits<13, 13>(data);
   };
   
   void SetOverflow(bool overflow) {
-    set_bits(data, 13, 13, overflow);
+    set_bits<13, 13>(data, overflow);
   };
   
   uint8_t GetGEO() const {
-    return bits(data, 14, 18);
+    return bits<14, 18>(data);
   };
   
   void SetGEO(uint8_t geo) {
-      set_bits(data, 14, 18, geo);
+    set_bits<14, 18>(data, geo);
   };
   
   uint8_t GetChannel() const {
-    return bits(data, 19, 23);
+    return bits<19, 23>(data);
   };
   
   void SetChannel(uint8_t channel) {
-    set_bits(data, 19, 23, channel);
+    set_bits<19, 23>(data, channel);
   };
   
   uint8_t GetCrate() const {
-    return bits(data, 24, 31);
+    return bits<24, 31>(data);
   };
   
   void SetCrate(uint8_t crate) {
-    set_bits(data, 24, 31, crate);
+    set_bits<24, 31>(data, crate);
   };
   
   uint32_t GetEvent() const {
-    return bits(data, 32, 55);
+    return bits<32, 55>(data);
   };
   
   void SetEvent(uint32_t event) {
-    set_bits(data, 32, 55, event);
+    set_bits<32, 55>(data, event);
   };
   
   void Print(std::ostream& output = std::cout) const {

@@ -17,12 +17,12 @@ public:
   unsigned short GetCardType(){return ((data[8] & 0b11000000) >> 6); }
   unsigned short GetCardID(){return ((data[8] & 0b00111111) << 6) | ((data[9] & 0b11111100) >> 2);}
   unsigned short GetNumberOfWords(){ return ((data[9] & 0b00000011) << 13) | (data[10] << 5) | ((data[11] & 0b11111000 ) >> 3) ;}
-  unsigned bool GetPayloadEarly(){return ((data[11] & 0b00000100) >> 1 );}
-  unsigned bool GetDelayedPackets(){return ((data[11] & 0b00000010) >> 1 );}
-  unsigned bool GetReserved(){return (data[11] & 0b00000001);}
+  bool GetPayloadEarly(){return ((data[11] & 0b00000100) >> 1 );}
+  bool GetDelayedPackets(){return ((data[11] & 0b00000010) >> 1 );}
+  bool GetReserved(){return (data[11] & 0b00000001);}
   unsigned short GetVersion(){return data[12] ;}
 
-  void SetMessgeNumber(unsigned int in){
+  void SetMessageNumber(unsigned int in){
     data[0] = in >> 24;
     data[1] = in >> 16;
     data[2] = in >> 8;
@@ -35,15 +35,18 @@ public:
     data[7] = in;
   }
   void SetCardType(unsigned short in){ data[8] = (data[8] & 0b00111111) | ((in & 0b00000011) << 6);}
-  void SetCardID(unsigned short in){ data[8] = (data[8] & 0b11000000) | ( in & 0b00111111)  ;}
-  void SetNumnerOfWords(unsigned short in){
+  void SetCardID(unsigned short in){
+    data[8] = (data[8] & 0b11000000) | (in >> 6) & 0b00111111;
+    data[9] = (data[9] & 0b00000011) | ((in & 0b00111111) << 2);
+  }
+  void SetNumberOfWords(unsigned short in){
     data[9] = (data[9] & 0b11111100) | ((in >> 13) & 0b00000011);
     data[10] = in >> 5;
     data[11] = (data[11] & 0b00000111)  | ((in << 3) & 0b11111000);
    }
-  void SetPayloadEarly(unsigned bool in){ data[11] = (data[11] & 0b11111011) | ((in & 0b00000001) << 2);}
-  void SetDelayedPackets(unsigned bool in){ data[11] = (data[11] & 0b11111101) | ((in & 0b00000001) << 1);}
-  void SetReserved(unsigned bool in){ data[11] = (data[11] & 0b11111110) | (in & 0b00000001);}
+  void SetPayloadEarly(bool in){ data[11] = (data[11] & 0b11111011) | ((in & 0b00000001) << 2);}
+  void SetDelayedPackets(bool in){ data[11] = (data[11] & 0b11111101) | ((in & 0b00000001) << 1);}
+  void SetReserved(bool in){ data[11] = (data[11] & 0b11111110) | (in & 0b00000001);}
   void SetVersion(unsigned short in){ data[12] = in;}
   void Print(){
     std::cout<<" message_number = "<<GetMessageNumber()<<std::endl;
@@ -52,7 +55,7 @@ public:
     std::cout<<" card_id = "<<GetCardID()<<std::endl;
     std::cout<<" number_of_words = "<<GetNumberOfWords()<<std::endl;
     std::cout<<" payload_early = "<<GetPayloadEarly()<<std::endl;
-    std::cout<<" delayed_packets = "<<GetDeleayedPackets()<<std::endl;
+    std::cout<<" delayed_packets = "<<GetDelayedPackets()<<std::endl;
     std::cout<<" reserved = "<<GetReserved()<<std::endl;
     std::cout<<" version = "<<GetVersion()<<std::endl;
   }
