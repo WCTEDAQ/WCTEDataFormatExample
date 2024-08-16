@@ -4,6 +4,37 @@
 #include <iostream>
 #include <BitFunctions.h>
 
+/* QDCHit: data provided by CAEN V792 charge to digital converter (QDC)
+ *
+ * Fields:
+ * bits    width field
+ *  0 - 11 12    Value
+ * 12 - 12 1     Overflow
+ * 13 - 13 1     UnderThreshold
+ * 14 - 18 5     GEO
+ * 19 - 23 5     Channel
+ * 24 - 31 8     Crate
+ * 32 - 55 24    Event
+ *
+ * - Value: measured charge, in 100 fC
+ * - UnderThreshold: when set, the datum was below the threshold set by the QDC
+ *   configuration.
+ * - Overflow: when set, the measured charge was too large to fit into Value.
+ * - GEO: QDC number set by configuration (GEO address).
+ * - Channel: QDC channel number for this measurement.
+ * - Event: trigger number for this measurement.
+ *
+ * Bits map:
+ *   01234567
+ * 0 vvvvvvvv         v = Value
+ * 1 vvvvougg         o = Overflow
+ * 2 gggccccc         u = UnderThreshold
+ * 3 CCCCCCCC         g = GEO
+ * 4 eeeeeeee         c = Channel
+ * 5 eeeeeeee         C = Crate
+ * 6 eeeeeeee         e = Event
+ */
+
 class QDCHit {
   
 public:
@@ -92,25 +123,6 @@ public:
   };
   
 private:
-  /* bits     width   field
-   *  0 - 11   12     value
-   * 12 - 12   1      under threshold
-   * 13 - 13   1      overflow
-   * 14 - 18   5      geo
-   * 19 - 23   5      channel
-   * 24 - 31   8      crate
-   * 32 - 55   24     event
-   
-     01234567
-   0 vvvvvvvv         v = value
-   1 vvvvougg         o = overflow
-   2 gggccccc         u = under threshold
-   3 CCCCCCCC         g = geo
-   4 eeeeeeee         c = channel
-   5 eeeeeeee         C = crate
-   6 eeeeeeee         e = event
-  */
-  
   uint8_t data[7];
 
 };
