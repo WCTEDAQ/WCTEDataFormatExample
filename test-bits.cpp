@@ -63,8 +63,8 @@ void usage(const char* argv0) {
 
 #define FIELDS_QDCHit(X) \
   X(Value,          12); \
-  X(UnderThreshold,  1); \
   X(Overflow,        1); \
+  X(UnderThreshold,  1); \
   X(GEO,             5); \
   X(Channel,         5); \
   X(Crate,           8); \

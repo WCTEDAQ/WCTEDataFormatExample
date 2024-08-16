@@ -18,8 +18,8 @@ public:
 	 ) {
     SetCrate(bits<16, 23>(header));
     SetValue(bits<0, 11>(packet));
-    SetOverflow(bits<12, 12>(packet));
-    SetUnderThreshold(bits<13, 13>(packet));
+    SetOverflow(bits<13, 13>(packet));
+    SetUnderThreshold(bits<12, 12>(packet));
     SetChannel(bits<16, 20>(packet));
     SetGEO(bits<27, 31>(packet));
     SetEvent(bits<0, 23>(trailer));
@@ -33,20 +33,20 @@ public:
     set_bits<0, 11>(data, value);
   };
   
-  bool GetUnderThreshold() const {
+  bool GetOverflow() const {
     return bits<12, 12>(data);
   };
   
-  void SetUnderThreshold(bool ut) {
-    set_bits<12, 12>(data, ut);
+  void SetOverflow(bool overflow) {
+    set_bits<12, 12>(data, overflow);
   };
   
-  bool GetOverflow() const {
+  bool GetUnderThreshold() const {
     return bits<13, 13>(data);
   };
   
-  void SetOverflow(bool overflow) {
-    set_bits<13, 13>(data, overflow);
+  void SetUnderThreshold(bool ut) {
+    set_bits<13, 13>(data, ut);
   };
   
   uint8_t GetGEO() const {
@@ -83,8 +83,8 @@ public:
   
   void Print(std::ostream& output = std::cout) const {
       output << "value = " << GetValue() << std::endl;
-      output << "under_threshold = " << GetUnderThreshold() << std::endl;
       output << "overflow = " << GetOverflow() << std::endl;
+      output << "under_threshold = " << GetUnderThreshold() << std::endl;
       output << "geo = " << static_cast<int>(GetGEO()) << std::endl;
       output << "channel = " << static_cast<int>(GetChannel()) << std::endl;
       output << "crate = " << static_cast<int>(GetCrate()) << std::endl;
@@ -103,8 +103,8 @@ private:
    
      01234567
    0 vvvvvvvv         v = value
-   1 vvvvuogg         u = under threshold
-   2 gggccccc         o = overflow
+   1 vvvvougg         o = overflow
+   2 gggccccc         u = under threshold
    3 CCCCCCCC         g = geo
    4 eeeeeeee         c = channel
    5 eeeeeeee         C = crate
