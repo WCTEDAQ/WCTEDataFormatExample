@@ -17,6 +17,19 @@
 #include "WCTEMPMTPPS.h"
 #include "WCTEMPMTWaveform.h"
 
+void usage(const char* argv0) {
+  std::cout
+    << "This program tests data packets by assigning the fields a value (a pattern) and then reading it back\n"
+       "Usage: " << argv0 << " [options] [patterns...]\n"
+       "Options:\n"
+       "  -d or --debug:   print packet data after each assignment\n"
+       "  -h or --help:    show this message\n"
+       "  -r or --random:  run an infinite loop testing with random patterns. Use Ctrl-C (SIGINT) to interrupt\n"
+       "  -v or --verbose: print successful tests too\n"
+       "Each pattern is interpreted as an unsigned 64-bits value\n"
+  ;
+};
+
 #define CLASSES_(X) \
   X(TDCHit) \
   X(QDCHit); \
@@ -58,12 +71,12 @@
   X(Event,          24)
 
 #define FIELDS_TDCHit(X) \
-  X(Measurement,  21); \
-  X(ExtendedTime, 27); \
-  X(Event,        22); \
-  X(Channel,       5); \
+  X(Value,        21); \
+  X(GEO,           5); \
   X(Trailing,      1); \
-  X(GEO,           5)
+  X(Channel,       5); \
+  X(Event,        22); \
+  X(ExtendedTime, 27)
 
 #define FIELDS_WCTEMPMTHit(X) \
   X(Header,         2); \
@@ -177,16 +190,20 @@ int main(int argc, char** argv) {
   while (true) {
     static option options[] = {
       { "debug",   no_argument, nullptr, 'd' },
+      { "help",    no_argument, nullptr, 'h' },
       { "random",  no_argument, nullptr, 'r' },
       { "verbose", no_argument, nullptr, 'v' }
     };
 
-    int c = getopt_long(argc, argv, "drv", options, nullptr);
+    int c = getopt_long(argc, argv, "dhrv", options, nullptr);
     if (c == -1) break;
     switch (c) {
       case 'd':
         debug = true;
         break;
+      case 'h':
+        usage(argv[0]);
+        return 0;
       case 'r':
         random = true;
         break;
