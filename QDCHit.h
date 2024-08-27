@@ -17,11 +17,16 @@
  * 32 - 55 24    Event
  *
  * - Value: measured charge, in 100 fC
+ *
  * - UnderThreshold: when set, the datum was below the threshold set by the QDC
  *   configuration.
+ *
  * - Overflow: when set, the measured charge was too large to fit into Value.
+ *
  * - GEO: QDC number set by configuration (GEO address).
+ *
  * - Channel: QDC channel number for this measurement.
+ *
  * - Event: trigger number for this measurement.
  *
  * Bits map:
