@@ -14,7 +14,7 @@ int main(){
   out_data.daq_info.sub_run_number = 42;
 
   for(int i=0; i<10; i++){
-    Trigger tmptrigger;
+    ReadoutWindow tmpwindow;
      for(int j=0; j<10; j++){
 
        WCTEMPMTHit mpmt_hit;
@@ -40,11 +40,11 @@ int main(){
        qdc_hit.SetValue(i*100);
 
 
-       tmptrigger.mpmt_hits.push_back(mpmt_hit);
-       tmptrigger.mpmt_waveforms.push_back(mpmt_waveform);
-       tmptrigger.hk_mpmt_hits.push_back(hk_mpmt_hit);
-       tmptrigger.tdc_hits.push_back(tdc_hit);
-       tmptrigger.qdc_hits.push_back(qdc_hit);
+       tmpwindow.mpmt_hits.push_back(mpmt_hit);
+       tmpwindow.mpmt_waveforms.push_back(mpmt_waveform);
+       tmpwindow.hk_mpmt_hits.push_back(hk_mpmt_hit);
+       tmpwindow.tdc_hits.push_back(tdc_hit);
+       tmpwindow.qdc_hits.push_back(qdc_hit);
      }
 
      TriggerInfo trigger_info;
@@ -52,8 +52,8 @@ int main(){
      trigger_info.time=324348923904328;
      
      
-     tmptrigger.triggers_info.push_back(trigger_info);
-     out_data.triggers.push_back(tmptrigger);
+     tmpwindow.triggers_info.push_back(trigger_info);
+     out_data.readout_windows.push_back(tmpwindow);
 
   }
   

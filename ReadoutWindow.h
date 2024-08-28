@@ -1,5 +1,5 @@
-#ifndef TRIGGER_H
-#define TRIGGER_H
+#ifndef READOUT_WINDOW_H
+#define READOUT_WINDOW_H
 
 #include <vector>
 #include <string>
@@ -10,37 +10,11 @@
 #include <WCTEMPMTWaveform.h>
 #include <WCTEMPMTLED.h>
 #include <HKMPMTHit.h>
+#include <TriggerType.h>
 #include <TDCHit.h>
 #include <QDCHit.h>
 
-enum class TriggerType{ LASER, NHITS, LED, BEAM, NONE };
-
-class TriggerInfo : public SerialisableObject{
-
-public:
-  
-  TriggerType type;
-  unsigned long time;
-  std::vector<WCTEMPMTLED> mpmt_LEDs;
-  
-  bool Print(){
-    std::cout<<"Trigger time = "<<time<<std::endl;
-    
-    return true;
-  }
-  std::string GetVersion(){return "1.0";}
-  bool Serialise(BinaryStream &bs){
-    
-    bs & type;
-    bs & time;
-    bs & mpmt_LEDs;
-
-    return true;
-  }
-  
-};
-
-class Trigger : SerialisableObject{
+class ReadoutWindow : SerialisableObject{
 
 public:
   
