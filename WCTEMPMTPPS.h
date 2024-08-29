@@ -7,6 +7,54 @@
 #include <stdlib.h>
 #include <bitset>
 
+/* WCTEMPMTPPS:
+ *
+ * Fields:
+ * bits     width field
+ *  0 -   1  2    Header
+ *  2 -   5  4    EventType
+ *  6 -   7  2    Reserved
+ *  8 -  71 64    PreviousPPSCoarseCounter
+ * 72 - 135 64    CurrentPPSCoarseCounter
+ *
+ * - Header: packet ID (0b01)
+ *
+ * - EventType: PPS (0xF)
+ *
+ * - Reserved:
+ *   - lower bit set to 1 iff this PPS was used to reset the coarse counter
+ *   - higher bit reserved for future use
+ *
+ * - PrevousPPSCoarseCounter: full coarse counter value at previous PPS
+ *
+ * - CurrentPPSCoarseCounter: full coarse counter value at current PPS. If this
+ *   is the designated PPS at run start, report value immediately prior to
+ *   coarse counter being set to zero.
+ *
+ * Full course counter values: if only 48 bits are available, pad upper 16 bits
+ * with zeroes
+ *
+ * Bits map:
+ *    01234567          h = Header
+ *  0 hhEEEERr          E = EventType
+ *  1 PPPPPPPP          R = reserved                 (Reserved & 0b10)
+ *  2 PPPPPPPP          r = reset the coarse counter (Reserved & 0b01)
+ *  3 PPPPPPPP          P = PreviousPPSCoarseCounter
+ *  4 PPPPPPPP          C = CurrentPPSCoarseCounter
+ *  5 PPPPPPPP
+ *  6 PPPPPPPP
+ *  7 PPPPPPPP
+ *  8 PPPPPPPP
+ *  9 CCCCCCCC
+ * 10 CCCCCCCC
+ * 11 CCCCCCCC
+ * 12 CCCCCCCC
+ * 13 CCCCCCCC
+ * 14 CCCCCCCC
+ * 15 CCCCCCCC
+ * 16 CCCCCCCC
+ */
+
 class WCTEMPMTPPS{
 
 public:

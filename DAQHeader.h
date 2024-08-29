@@ -7,6 +7,51 @@
 #include <stdlib.h>
 #include <bitset>
 
+/* DAQHeader
+ *
+ * Fields:
+ * bits    width field
+ *  0 - 31 32    MessageNumber
+ * 32 - 63 32    CoarseCounter
+ * 64 - 65  2    CardType
+ * 66 - 77 12    CardID
+ * 78 - 92 15    NumberOfWords
+ * 93 - 93  1    PayloadEarly
+ * 94 - 94  1    DelayedPackets
+ * 95 - 95  1    Reserved
+ *
+ * - MessageNumber: unique message number incremented by 1 for each message
+ *   (sent back as akn receipt). Messages should be sent every 100ms
+ *
+ * - CoarseCounter: coarse counter at start of packet generation (LSB = 0.52
+ *   ms). A new packet is sent every 1.25 M coarse ticks (10 ms). max ~26 days
+ *
+ * - CardType: IWCD WCTE mPMT (00), Buffered ADC readout (01), FD-mPMT (10), Trigger mainboard (11)
+ *
+ * - CardID: unique card ID (0-4095)
+ *
+ * - NumberOfWords: number of words in preceeding payload
+ *
+ * - PayloadEarly: first bit of payload sent early due to full memory
+ *
+ * - DelayedPackets: the packet was delayed; more data may be waiting in the buffer
+ *
+ * Bits map:
+ *    01234567
+ *  0 mmmmmmmm          m = MessageNumber
+ *  1 mmmmmmmm          c = CoarseCounter
+ *  2 mmmmmmmm          T = CardType
+ *  3 mmmmmmmm          I = CardID
+ *  4 cccccccc          w = NumberOfWords
+ *  5 cccccccc          p = PayloadEarly
+ *  6 cccccccc          d = DelayedPackets
+ *  7 cccccccc          R = Reserved
+ *  8 TTIIIIII
+ *  9 IIIIIIww
+ * 10 wwwwwwww
+ * 11 wwwwwpdR
+ */
+
 class DAQHeader{
 
 public:

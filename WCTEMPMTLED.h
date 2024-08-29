@@ -7,6 +7,58 @@
 #include <stdlib.h>
 #include <bitset>
 
+/* WCTEMPMTLED:
+ *
+ * Fields:
+ * bits     width field
+ *  0 -  1  2     Header
+ *  2 -  5  4     EventType
+ *  6 -  8  3     LED
+ *  9 -  9  1     Gain
+ * 10 - 19 10     DACSetting
+ * 20 - 21  2     Type
+ * 22 - 35 14     SequenceNumber
+ * 36 - 67 32     CoarseCounter
+ * 68 - 71  4     Reserved
+ *
+ * - Header: packet ID (0b01)
+ *
+ * - EventType: LED (2)
+ *
+ * - LED: which of three LEDs fired (3 bits)
+ *
+ * - Gain: gain DAC setting (1 bit) 1 = high gain (more photons) or 0 = low
+ *   gain (less photons)
+ *
+ * - DACSetting: set the value of 10 bit DAC
+ *
+ * - Type: type of LED flash
+ *   - 00: software initiated sequence
+ *   - 01: hardware triggered
+ *   - 10, 11: for future extensions
+ *
+ * - SequenceNumber: what flash are we in LED flashing sequence (supports up to
+ *   16384 flashes in sequence)
+ *
+ * - CoarseCounter: lower 32 bits of coarse counter - when combined with the 16
+ *   upper bits from the packet header, the 48-bit coarse counter is the coarse
+ *   time for LED flash. LSB is 8 ns
+ *
+ * - Reserved: not currently in use
+ *
+ * Bits map:
+ *    01234567
+ *  0 hhEEEELL          h = Header
+ *  1 LGDDDDDD          E = EventType
+ *  2 DDDDttNN          L = LED
+ *  3 NNNNNNNN          G = Gain
+ *  4 NNNNTTTT          D = DACSetting
+ *  5 TTTTTTTT          t = Type
+ *  6 TTTTTTTT          N = SequenceNumber
+ *  7 TTTTTTTT          T = CoarseCounter
+ *  8 TTTTRRRR          R = Reserved
+ */
+
 class WCTEMPMTLED{
 
 public:

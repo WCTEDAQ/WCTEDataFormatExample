@@ -18,13 +18,18 @@
  * - Value: measured hit time, in 25 pcs. This is the value of the internal
  *   clock of the TDC that happened to be when the hit occured. It loops every
  *   52.4 us.
+ *
  * - ExtendedTime: extended trigger time tag, in 25 ns. This is the value of
  *   the internal clock sampled at lower frequency that happened to be at the
  *   start of the trigger window. It loops every 107 s.
+ *
  * - Event: trigger number for this measurement.
+ *
  * - Channel: TDC channel number for this measurement.
+ *
  * - Trailing: whether this is the measurement of the trailing (1) or the
  *   leading (0) edge of the pulse.
+ *
  * - GEO: TDC number set by configuration (GEO address).
  *
  * Bits map:
