@@ -22,9 +22,12 @@ public:
   std::vector<WCTEMPMTHit> mpmt_hits;  
   std::vector<WCTEMPMTWaveform> mpmt_waveforms;
   std::vector<HKMPMTHit> hk_mpmt_hits;
+   std::vector<WCTEMPMTHit> extra_hits;
+  std::vector<WCTEMPMTWaveform> extra_waveforms;
   std::vector<TDCHit> tdc_hits;
   std::vector<QDCHit> qdc_hits;
-
+  unsigned long start_counter;
+  unsigned long readout_num;
 
   bool Print(){
 
@@ -36,12 +39,17 @@ public:
     for(int i=0; i<mpmt_waveforms.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; mpmt_waveforms.at(i).Print();}
     std::cout<<"/////////////////////////hk mpmt hits//////////////////"<<std::endl;
     for(int i=0; i<hk_mpmt_hits.size(); i++){ std::cout<<"///["<<i<<"]///"<<std::endl; hk_mpmt_hits.at(i).Print();}
+    std::cout<<"/////////////////////////extra hits//////////////////"<<std::endl;
+    for(int i=0; i<extra_hits.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; extra_hits.at(i).Print();}
+    std::cout<<"/////////////////////////extra waveforms//////////////////"<<std::endl;
+    for(int i=0; i<extra_waveforms.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; extra_waveforms.at(i).Print();}
     std::cout<<"/////////////////////////tdc data//////////////////"<<std::endl;
     for(int i=0; i<tdc_hits.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; tdc_hits.at(i).Print();}
     std::cout<<"/////////////////////////qdc data//////////////////"<<std::endl;
-    for(int i=0; i<qdc_hits.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; qdc_hits.at(i).Print();}
-    std::cout<<"///////////////////////////////////////////"<<std::endl;
-    
+    for(int i=0; i<qdc_hits.size(); i++){std::cout<<"///["<<i<<"]///"<<std::endl; qdc_hits.at(i).Print();}   
+    std::cout<<"///////////////////////////start counter ="<<start_counter<<"////////////////"<<std::endl;
+   std::cout<<"///////////////////////////readout numebr ="<<readout_num<<"////////////////"<<std::endl;
+   std::cout<<"///////////////////////////////////////////"<<std::endl<<std::endl;
     return true;
 
   }
@@ -52,6 +60,8 @@ public:
     bs & mpmt_hits;
     bs & mpmt_waveforms;
     bs & hk_mpmt_hits;
+    bs & extra_hits;
+    bs & extra_waveforms;
     bs & tdc_hits;
     bs & qdc_hits;
 

@@ -1,4 +1,4 @@
-ToolFrameworkPath=../ToolFrameworkCore
+ToolFrameworkPath=../WCTEDAQ/Dependencies/ToolFrameworkCore
 
 CXXFLAGS ?= -O3 -pipe
 
@@ -17,6 +17,9 @@ test-bits: test-bits.o
 test-bits.o: test-bits.cpp DAQHeader.h HKMPMTHit.h QDCHit.h TDCHit.h WCTEMPMTHit.h \
   WCTEMPMTLED.h WCTEMPMTPPS.h WCTEMPMTWaveform.h BitFunctions.h
 	g++ -O3 -c $< -I . -I $(ToolFrameworkPath)/include
+
+rawread: rawread.cpp 
+	 g++ -O3  -o $@ $^ -I . -I $(ToolFrameworkPath)/include -L $(ToolFrameworkPath)/lib -lStore
 
 clean:
 	rm -f Example main.o test-bits test-bits.o

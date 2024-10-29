@@ -7,64 +7,11 @@
 #include <stdlib.h>
 #include <bitset>
 
-/* WCTEMPMTHit:
- *
- * Fields:
- * bits    width field
- *  0 -  1  2    Header
- *  2 -  5  4    EventType
- *  6 - 10  5    Channel
- * 11 - 15  5    Flags
- * 16 - 47 32    CoarseCounter
- * 48 - 63 16    FineTime
- * 64 - 79 16    Charge
- * 80 - 87  8    QualityFactor
- *
- * - Header: packet ID (0b01)
- *
- * - EventType:
- *   -   0: normal PMT
- *   -   1: pedestal
- *   -   2: LED
- *   -   3: calibration
- *   - 0xF: PPS
- *
- * - Channel: sub-PMT ID (0-32)
- *
- * - Flags (bits 4..0): packet enable (4 bit), compression enable (3 bit),
- *   waveform enable (2 bit)
- *
- * - CoarseCounter: lower 32 bits of coarse counter - when combined with the 16
- *   upper bits from the packet header, the 48-bit coarse counter is the coarse
- *   time estimate for the hit. LSB is 8 ns. Max ~34.45 s.
- *
- * - FineTime: time estimate within one 8 ns coarse time bin. The full range of
- *   fine time is [0,8) ns. LSB is 1/8192 ns. The sum of the 48-bit coarse
- *   counter and fine time is time relative to run start.
- *
- * - Charge: ADC counts
- *
- * - QualityFactor: quality factor for the time estimate
- *
- * Bits map:
- *    01234567
- *  0 hhEEEEcc          h = Header
- *  1 cccpzwRR          E = EventType
- *  2 TTTTTTTT          c = Channel
- *  3 TTTTTTTT          p = packet enable      (Flags & 0b10000)
- *  4 TTTTTTTT          z = compression enable (Flags & 0b01000)
- *  5 TTTTTTTT          w = waveform enable    (Flags & 0b00100)
- *  6 tttttttt          R = reserved           (Flags & 0b00011)
- *  7 tttttttt          T = CoarseCounter
- *  8 CCCCCCCC          t = FineTime
- *  9 CCCCCCCC          C = Charge
- * 10 QQQQQQQQ          Q = QualityFactor
- */
-
 class WCTEMPMTHit{
 
 public:
   WCTEMPMTHit(){std::fill(std::begin(data), std::end(data), 0);}
+  WCTEMPMTHit(unsigned short& in_card_id, unsigned char* in_data){ card_id=in_card_id; memcpy(&data[0], in_data, sizeof(data));}
   
   unsigned short GetCardID(){return card_id;}
   unsigned short GetHeader(){return (data[0] & 0b11000000) >> 6; }
@@ -75,6 +22,8 @@ public:
   unsigned short GetFineTime(){return (data[6] << 8) | (data[7]);}
   unsigned short GetCharge(){return (data[8] << 8 ) | data[9] ;}
   unsigned short GetQualityFactor(){return data[10];}
+  static unsigned int GetSize(){return sizeof(data);};
+  unsigned char* GetData(){return data;}
 
   void SetCardID(unsigned short in){ card_id=in;}
   void SetHeader(unsigned short in){ data[0] = (data[0] & 0b00111111) | ((in & 0b00000011) << 6);}
@@ -109,12 +58,13 @@ public:
     std::cout<<" charge = "<<GetCharge()<<std::endl;
     std::cout<<" quality_factor = "<<GetQualityFactor()<<std::endl;
   }
-  
+
+
 private:
 
   unsigned short card_id;
   unsigned char data[11];
-
+  
 };
 
 

@@ -48,7 +48,7 @@ int main(){
      }
 
      TriggerInfo trigger_info;
-     trigger_info.type=TriggerType::BEAM;
+     trigger_info.type=TriggerType::MAIN;
      trigger_info.time=324348923904328;
      
      
