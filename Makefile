@@ -21,6 +21,9 @@ test-bits.o: test-bits.cpp DAQHeader.h HKMPMTHit.h QDCHit.h TDCHit.h WCTEMPMTHit
 rawread: rawread.cpp 
 	 g++ -O3  -o $@ $^ -I . -I $(ToolFrameworkPath)/include -L $(ToolFrameworkPath)/lib -lStore
 
+rawread2: rawread2.cpp 
+	 g++ -O3  -o $@ $^ -I . -I $(ToolFrameworkPath)/include -L $(ToolFrameworkPath)/lib -lStore -I ../WCTEDAQ/DataModel
+
 clean:
 	rm -f Example main.o test-bits test-bits.o
 
